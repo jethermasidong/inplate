@@ -109,8 +109,8 @@ export default function Commodities() {
         
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="mt-8">
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">InPlate Commodity Dashboard</h1>
-            <p className="text-slate-500 mt-1">Track real-time market prices, weekly inflation trends, and regional costs.</p>
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">InPlate Commodity Dashboard</h1>
+            <p className="text-slate-500 mt-1 italic">Track real-time market prices, weekly inflation trends, and regional costs.</p>
           </div> 
         </div>
 
@@ -120,9 +120,9 @@ export default function Commodities() {
                 <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+                className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
                     selectedCategory === category
-                    ? 'bg-green-600 text-white shadow-sm'
+                    ? 'bg-green-900 text-white shadow-sm'
                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
                 }`}
                 >
@@ -136,7 +136,7 @@ export default function Commodities() {
                 placeholder="Search food item..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 bg-white border border-slate-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600 text-sm"
+                className="w-full px-4 py-2 bg-white border border-slate-200 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-green-900 text-sm"
                 />
             </div>
         </div>
@@ -148,9 +148,9 @@ export default function Commodities() {
         )}
 
         {error && (
-          <div className="text-center py-10 bg-red-50 text-red-600 rounded-xl border border-red-200">
-            <p className="font-semibold">⚠️ Connection Error</p>
-            <p className="text-sm mt-1">{error}. Make sure your Fastify server is running.</p>
+          <div className="text-center py-10 bg-red-50 text-red-900 rounded-xl border border-red-200">
+            <p className="font-semibold">Connection Error</p>
+            <p className="text-sm mt-1 px-3">{error}. Server Error</p>
           </div>
         )}
 
