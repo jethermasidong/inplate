@@ -46,7 +46,7 @@ export default function Homepage() {
       <div className="relative mx-4 my-4 md:mx-6 md:my-6 rounded-3xl shadow-2xl shadow-slate-300/50 border border-slate-200/80 overflow-hidden">
         <section id="#about" className="px-6 py-24 md:py-32 bg-white/10 backdrop-blur-md border-y border-slate-200/60">
           <div className="max-w-4xl mx-auto space-y-10">
-            <div className="text-center space-y-6 max-w-2xl mx-auto -mt-10">
+            <div className="text-center space-y-6 max-w-2xl mx-auto -mt-15">
               <h2 className="text-3xl md:text-5xl -mt-15 font-bold tracking-tight text-black leading-tight bg-white border border-green-900/80 shadow-sm transition-all">
                 ABOUT INPLATE
               </h2>

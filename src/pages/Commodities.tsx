@@ -32,11 +32,13 @@ export default function Commodities() {
         const groupedMap = new Map();
 
         rawRows.forEach((row: any) => {
+          const rowNum = Number(row.rn || row.ROW_NUM || 1);
+
           if (!groupedMap.has(row.id)) {
             groupedMap.set(row.id, {
               id: row.id,
               name: row.name,
-              category: row.category || 'Cereals',
+              category: row.category === 'Fish' ? 'Fish' : (row.category || 'Cereals'),
               specification: row.specification,
               unit: row.unit,
               market_location: row.market,
@@ -46,10 +48,10 @@ export default function Commodities() {
           }
 
           const item = groupedMap.get(row.id);
-          if (row.rn === 1) {
+          if (rowNum === 1) {
             item.currentPrice = Number(row.price);
             item.period_of = row.period_of;
-          } else if (row.rn === 2) {
+          } else if (rowNum === 2) {
             item.previousPrice = Number(row.price);
           }
         });
@@ -172,7 +174,7 @@ export default function Commodities() {
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="px-2.5 py-0.5 text-xs font-semibold bg-slate-100 text-slate-600 rounded-full">
+                      <span className="px-2.5 py-0.5 text-xs font-semibold text-slate-600 border border-green-900 rounded-full">
                         {item.category}
                       </span>
                       
@@ -180,41 +182,34 @@ export default function Commodities() {
                         isNeutral 
                           ? 'bg-slate-100 text-slate-600' 
                           : isInflationary 
-                            ? 'bg-red-50 text-red-600' 
-                            : 'bg-emerald-50 text-emerald-600'
+                            ? 'bg-white text-red-600' 
+                            : 'bg-white text-emerald-600'
                       }`}>
                         {isNeutral ? '• 0.0%' : isInflationary ? `↑ +${movement}%` : `↓ ${movement}%`}
                       </span>
                     </div>
 
-                    <h3 className="font-semibold text-slate-800 text-lg leading-snug mb-1">
+                    <h3 className="font-bold text-slate-800 text-xl leading-snug mb-1">
                       {item.name}
                     </h3>
-                    <p className="text-xs text-slate-400 mb-4">{item.market_location || 'Metro Manila (NCR)'}</p>
+                    <p className="text-xs text-slate-400 mb-4 italic">{item.market_location || 'Metro Manila (NCR)'}</p>
                   </div>
 
                   <div>
                     <div className="flex items-baseline justify-between mb-4 pt-3 border-t border-slate-100">
                       <div>
-                        <span className="text-2xl font-bold text-slate-900">₱{Number(item.currentPrice).toFixed(2)}</span>
-                        <span className="text-xs text-slate-500 ml-1">/ {item.unit}</span>
+                        <span className="text-3xl font-bold text-slate-900">₱{Number(item.currentPrice).toFixed(2)}</span>
+                        <span className="text-sm text-slate-500 ml-1">/ {item.unit}</span>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="">
                       <button 
                         onClick={() => openTrendModal(item.id)}
-                        className="w-full py-2 px-1 text-xs font-medium text-white bg-green-700 hover:bg-white hover:text-green-700 border border-green-700 rounded-lg transition-colors text-center"
+                        className="w-full py-2 px-1 text-xs font-medium text-white bg-green-900 hover:bg-white hover:text-green-900 border border-green-900 rounded-lg transition-colors text-center"
                       >
                         View Trend
                       </button> 
-                      
-                      <div className="w-full py-2 px-1 text-xs font-medium text-slate-700 bg-slate-50 border border-slate-200 rounded-lg text-center flex flex-col justify-center">
-                        <span className="text-[10px] text-slate-400 uppercase tracking-wider">Prev Price</span>
-                        <span className="font-semibold text-slate-800">
-                          {item.previousPrice ? `₱${item.previousPrice.toFixed(2)}` : 'N/A'}
-                        </span>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -226,63 +221,107 @@ export default function Commodities() {
       </div>
 
       {activeTrend && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-2xl w-full p-6 space-y-6 animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 backdrop-blur-xs p-4">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-2xl w-full p-6 space-y-6 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <div>
-                <span className="px-2.5 py-0.5 text-xs font-semibold bg-green-50 text-green-700 rounded-full">
-                  {activeTrend.category || 'Commodity Trend'}
+                <span className="text-[11px] font-semibold text-green-900 tracking-wider uppercase">
+                  {activeTrend.category || 'Trend Analysis'}
                 </span>
-                <h2 className="text-2xl font-bold text-slate-900 mt-1">{activeTrend.name}</h2>
-                <p className="text-xs text-slate-500">Historical price movement per tracking period ({activeTrend.unit})</p>
+                <h2 className="text-xl font-bold text-slate-900">{activeTrend.name}</h2>
               </div>
               <button 
                 onClick={() => setActiveTrend(null)}
-                className="w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full font-bold transition-colors"
+                className="w-7 h-7 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-500 rounded-full text-xs transition-colors"
               >
                 ✕
               </button>
             </div>
 
             {trendLoading ? (
-              <div className="py-16 text-center text-slate-400 animate-pulse">Loading trend analysis...</div>
+              <div className="py-12 text-center text-slate-400 text-xs animate-pulse">Loading trend analysis...</div>
             ) : activeTrend.data && activeTrend.data.length > 0 ? (
-              <div className="space-y-4">
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                  <div className="h-48 w-full flex items-end gap-3 pt-6 px-2">
-                    {activeTrend.data.map((pt: any, idx: number) => {
+              <div className="space-y-6">
+                <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs flex flex-col justify-center items-center">
+                  <div className="w-full flex justify-between items-center mb-4">
+                    <span className="text-xs font-medium text-slate-500">Price trajectory over time</span>
+                    <span className="text-xs text-slate-400">Unit: {activeTrend.unit}</span>
+                  </div>
+
+                  <div className="relative h-44 w-full pt-2 flex items-center justify-center">
+                    {(() => {
                       const prices = activeTrend.data.map((d: any) => d.price);
                       const maxPrice = Math.max(...prices, 1);
                       const minPrice = Math.min(...prices, 0);
                       const range = maxPrice - minPrice || 1;
-                      const heightPercent = Math.max(
-                        15,
-                        Math.round(((pt.price - minPrice) / range) * 100)
-                      );
+
+                      const width = 500;
+                      const height = 140;
+                      const points = activeTrend.data.map((pt: any, idx: number) => {
+                        const x = (idx / (activeTrend.data.length - 1 || 1)) * width;
+                        const y = height - ((pt.price - minPrice) / range) * (height - 20) - 10;
+                        return { x, y, ...pt };
+                      });
+
+                      const pointsString = points.map((p: any) => `${p.x},${p.y}`).join(' ');
+                      const latestPoint = points[points.length - 1];
 
                       return (
-                        <div key={idx} className="flex-1 flex flex-col items-center h-full justify-end group relative">
-                          <div className="absolute -top-10 bg-slate-900 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md pointer-events-none">
-                            ₱{pt.price.toFixed(2)} ({pt.period_of})
+                        <div className="relative w-full h-full flex flex-col justify-center items-center">
+                          <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-36 overflow-visible">
+                            <line x1="0" y1={height} x2={width} y2={height} stroke="#e2e8f0" strokeWidth="1" />
+
+                            <polyline
+                              fill="none"
+                              stroke="#065f46"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              points={pointsString}
+                            />
+
+                            {points.map((p: any, idx: number) => {
+                              const isLatest = idx === points.length - 1;
+                              return (
+                                <g key={idx} className="group cursor-pointer">
+                                  <circle
+                                    cx={p.x}
+                                    cy={p.y}
+                                    r={isLatest ? "5" : "4"}
+                                    className={`${isLatest ? 'fill-green-700 stroke-white' : 'fill-white stroke-green-900'} stroke-2 transition-transform duration-150 group-hover:scale-125`}
+                                  />
+                                </g>
+                              );
+                            })}
+                          </svg>
+
+                          {latestPoint && (
+                            <div 
+                              className="absolute -top-3 bg-green-900 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1 pointer-events-none transform -translate-x-1/2"
+                              style={{ 
+                                left: `${(latestPoint.x / width) * 100}%`,
+                              }}
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                              Latest: ₱{latestPoint.price.toFixed(2)}
+                            </div>
+                          )}
+
+                          <div className="w-full flex justify-between items-center text-[10px] text-slate-400 mt-2 pt-2 border-t border-slate-100">
+                            {activeTrend.data.map((pt: any, idx: number) => (
+                              <span key={idx} className="truncate text-center">
+                                {pt.period_of.split(' - ')[0]}
+                              </span>
+                            ))}
                           </div>
-                          
-                          <span className="text-[10px] font-bold text-slate-600 mb-1">₱{pt.price}</span>
-                          <div 
-                            style={{ height: `${heightPercent}%` }}
-                            className="w-full bg-green-600 rounded-t group-hover:bg-green-500 transition-all"
-                          ></div>
-                          <span className="text-[9px] text-slate-400 mt-2 truncate w-full text-center">
-                            {pt.period_of.split(' - ')[0]}
-                          </span>
                         </div>
                       );
-                    })}
+                    })()}
                   </div>
                 </div>
-
-                <div className="border border-slate-200 rounded-xl overflow-hidden">
+                <div className="border border-slate-200 rounded-sm overflow-hidden mb-5">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 uppercase">
+                    <thead className="bg-slate-50 border-b border-slate-200 text-black uppercase">
                       <tr>
                         <th className="p-3">Monitoring Period</th>
                         <th className="p-3 text-right">Recorded Price</th>
@@ -291,8 +330,10 @@ export default function Commodities() {
                     <tbody className="divide-y divide-slate-100">
                       {activeTrend.data.map((log: any, i: number) => (
                         <tr key={i} className="hover:bg-slate-50">
-                          <td className="p-3 text-slate-700 font-medium">{log.period_of}</td>
-                          <td className="p-3 text-right font-bold text-slate-900">₱{log.price.toFixed(2)}</td>
+                          <td className="p-3 text-green-900 font-medium"><p className="border border-green-900/20 w-fit mr-auto px-2 py-1 rounded-full">₱{log.period_of}</p></td>
+                          <td className="p-3 text-right font-bold text-green-900">
+                            <p className="border border-green-900/20 w-fit ml-auto px-2 py-1 rounded-full">₱{log.price.toFixed(2)}</p>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -300,17 +341,8 @@ export default function Commodities() {
                 </div>
               </div>
             ) : (
-              <div className="py-12 text-center text-slate-400">No historical data points found.</div>
+              <div className="py-8 text-center text-slate-400 text-xs">No historical data found.</div>
             )}
-
-            <div className="flex justify-end pt-2 border-t border-slate-100">
-              <button
-                onClick={() => setActiveTrend(null)}
-                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-lg transition-colors"
-              >
-                Close
-              </button>
-            </div>
           </div>
         </div>
       )}
