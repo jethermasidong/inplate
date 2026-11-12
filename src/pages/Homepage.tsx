@@ -43,52 +43,53 @@ export default function Homepage() {
         </div>
       </div>
 
-      <div className="relative mx-4 my-4 md:mx-6 md:my-6 rounded-3xl shadow-2xl shadow-slate-300/50 border border-slate-200/80 overflow-hidden">
-        <section id="#about" className="px-6 py-24 md:py-32 bg-white/10 backdrop-blur-md border-y border-slate-200/60">
-          <div className="max-w-4xl mx-auto space-y-10">
-            <div className="text-center space-y-6 max-w-2xl mx-auto -mt-15">
-              <h2 className="text-3xl md:text-5xl -mt-15 font-bold tracking-tight text-black leading-tight bg-white border border-green-900/80 shadow-sm transition-all">
+      <div className="relative mx-4 my-4 md:mx-6 md:my-6 rounded-3xl shadow-2xl shadow-slate-300/50 border border-black/20 overflow-hidden">
+        <section id="#about" className="px-6 py-24 md:py-32 bg-green-900/10 backdrop-blur-md border-y border-slate-200/60">
+          <div className="max-w-4xl mx-auto space-y-9">
+            <div className="text-center space-y-6 max-w-2xl mx-auto">
+              <h2 className="text-3xl md:text-5xl -mt-15 font-extrabold tracking-tight text-black leading-tight transition-all">
                 ABOUT INPLATE
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="p-8 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-100 shadow-xl shadow-slate-200/50 hover:border-green-900 transition-all group">
-                <h3 className="text-xl font-semibold text-green-900 italic">Price Hikes & Inflation</h3>
-                <p className="text-slate-600 leading-relaxed text-xs">
-                  Philippine inflation is driven by typhoon crop damage, transport costs, and supply shocks in staples like rice and pork, directly raising everyday market expenses.                
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <div className="group space-y-3 border-t border-green-900">
+                <h3 className="text-lg font-medium text-green-900 tracking-tight mt-4">Price Hikes & Inflation</h3>
+                <p className="text-sm text-gray-600 leading-relaxed font-light hover:text-gray-900">
+                  Philippine inflation is driven by typhoon crop damage, transport costs, and supply shocks in staples like rice and pork, directly raising everyday market expenses.
                 </p>
               </div>
 
-              <div className="p-8 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-100 shadow-xl shadow-slate-200/50 hover:border-green-900 transition-all group">                  
-                <h3 className="text-xl font-semibold text-green-900 italic">AI-Powered</h3>
-                <p className="text-slate-600 leading-relaxed text-xs">
+              <div className="group space-y-3 border-t border-green-900">
+                <h3 className="text-lg font-medium text-green-900 tracking-tight mt-4">AI-Powered Extraction</h3>
+                <p className="text-sm text-gray-600 leading-relaxed font-light hover:text-gray-900">
                   In InPlate, Gemini automatically extracts messy agricultural pricing from government PDFs into clean records for PostgreSQL.
                 </p>
               </div>
 
-              <div className="p-8 rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-100 shadow-xl shadow-slate-200/50 hover:border-green-900 transition-all group">
-                <h3 className="text-xl font-semibold text-green-900 italic">Data Analytics</h3>
-                <p className="text-slate-600 leading-relaxed text-xs">
+              <div className="group space-y-3 border-t border-green-900">
+                <h3 className="text-lg font-medium text-green-900 tracking-tight mt-4">Data Analytics</h3>
+                <p className="text-sm text-gray-600 leading-relaxed font-light hover:text-gray-900">
                   In InPlate, analytics power interactive charts that track market volatility, price shifts, and inflation trends.
                 </p>
               </div>
             </div>
+
           </div>
         </section>
 
-        <section id="#information" className="px-6 py-20 md:py-28">
-          <div className="max-w-4xl mx-auto bg-linear-to-r rounded-3xl p-10 md:p-16 text-center text-white shadow-2xl shadow-black/20 border border-green-900 relative overflow-hidden space-y-6">
-            <div className="absolute -right-16 -top-16 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+        <section id="#information" className="px-6 py-20 md:py-18">
+          <div className="max-w-3xl mx-auto bg-linear-to-r rounded-3xl p-10 md:p-16 text-center text-white shadow-2xl shadow-black/20 border border-green-900 relative overflow-hidden space-y-6">
+            <div className="absolute -right-16 -top-16 w-56 h-56 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
             
             <h2 className="text-2xl md:text-4xl text-green-900 font-extrabold tracking-tight uppercase">
               Need More Info? <br /> About this project.
             </h2>
-            <p className="text-black/50 text-lg md:text-xl max-w-xl mx-auto">
+            <p className="text-black/50 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
               Ask some questions, or contribute in this project?
             </p>
             <div className="pt-2">
-              <button className="px-8 py-4 text-base font-semibold text-black bg-white hover:bg-emerald-50 hover:text-green-900 border border-gray-300 rounded-xl shadow-lg transition-all active:scale-95">
+              <button className="px-6 py-3 text-base font-semibold text-black bg-white hover:bg-emerald-50 hover:text-green-900 border border-gray-300 rounded-xl shadow-lg transition-all active:scale-95 leading-relaxed">
                 Connect with Dev
               </button>
             </div>
